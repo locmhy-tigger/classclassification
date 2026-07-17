@@ -932,11 +932,11 @@ def process_data():
             ws.cell(row=summary_header_row, column=3, value='').border = thin_border
             
             ws.cell(row=summary_header_row + 1, column=4, value='人數').font = font_summary
-            ws.cell(row=summary_header_row + 1, column=4, alignment=align_center)
+            ws.cell(row=summary_header_row + 1, column=4).alignment = align_center
             ws.cell(row=summary_header_row + 1, column=5, value='F').font = font_summary
-            ws.cell(row=summary_header_row + 1, column=5, alignment=align_center)
+            ws.cell(row=summary_header_row + 1, column=5).alignment = align_center
             ws.cell(row=summary_header_row + 1, column=6, value='M').font = font_summary
-            ws.cell(row=summary_header_row + 1, column=6, alignment=align_center)
+            ws.cell(row=summary_header_row + 1, column=6).alignment = align_center
             
             curr_sum_row = summary_header_row + 2
             
@@ -946,21 +946,21 @@ def process_data():
                 
             for cls in grade_classes:
                 ws.cell(row=curr_sum_row, column=3, value=cls).font = font_summary
-                ws.cell(row=curr_sum_row, column=3, alignment=align_center)
+                ws.cell(row=curr_sum_row, column=3).alignment = align_center
                 
                 total_formula = f'=COUNTIF($A$2:$A${row_idx-1}, "{cls}")'
                 ws.cell(row=curr_sum_row, column=4, value=total_formula).font = font_summary
-                ws.cell(row=curr_sum_row, column=4, alignment=align_center)
+                ws.cell(row=curr_sum_row, column=4).alignment = align_center
                 
                 start, end = class_positions[grade].get(cls, (2, 2))
                 female_formula = f'=COUNTIF($L${start}:$L${end}, "F")'
                 male_formula = f'=COUNTIF($L${start}:$L${end}, "M")'
                 
                 ws.cell(row=curr_sum_row, column=5, value=female_formula).font = font_summary
-                ws.cell(row=curr_sum_row, column=5, alignment=align_center)
+                ws.cell(row=curr_sum_row, column=5).alignment = align_center
                 
                 ws.cell(row=curr_sum_row, column=6, value=male_formula).font = font_summary
-                ws.cell(row=curr_sum_row, column=6, alignment=align_center)
+                ws.cell(row=curr_sum_row, column=6).alignment = align_center
                 
                 class_positions[grade][cls + '_sum_cells'] = {
                     'total': f'={grade}!D{curr_sum_row}',
@@ -988,7 +988,7 @@ def process_data():
             for letter in ['A', 'B', 'C', 'D']:
                 cls = g_num + letter
                 ws_num.cell(row=curr_row, column=2, value=cls).font = font_body
-                ws_num.cell(row=curr_row, column=2, alignment=align_center)
+                ws_num.cell(row=curr_row, column=2).alignment = align_center
                 
                 if grade in class_positions and cls + '_sum_cells' in class_positions[grade]:
                     cells = class_positions[grade][cls + '_sum_cells']
