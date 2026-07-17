@@ -189,7 +189,7 @@ function App() {
       const c1 = studentClassMap[rel.student1]
       const c2 = studentClassMap[rel.student2]
       if (c1 && c2 && c1 === c2) {
-        violations.append({
+        violations.push({
           ...rel,
           class: c1
         })
@@ -467,10 +467,10 @@ function App() {
                             onChange={e => handleManualPlacementChange(rep.name, e.target.value)}
                           >
                             <option value="Auto">自動平衡 (Auto)</option>
-                            <option value={`${rep.grade[-1]}A`}>{rep.grade[-1]}A</option>
-                            <option value={`${rep.grade[-1]}B`}>{rep.grade[-1]}B</option>
-                            <option value={`${rep.grade[-1]}C`}>{rep.grade[-1]}C</option>
-                            <option value={`${rep.grade[-1]}D`}>{rep.grade[-1]}D</option>
+                            <option value={`${rep.grade.slice(-1)}A`}>{rep.grade.slice(-1)}A</option>
+                            <option value={`${rep.grade.slice(-1)}B`}>{rep.grade.slice(-1)}B</option>
+                            <option value={`${rep.grade.slice(-1)}C`}>{rep.grade.slice(-1)}C</option>
+                            <option value={`${rep.grade.slice(-1)}D`}>{rep.grade.slice(-1)}D</option>
                           </select>
                         </td>
                       </tr>
@@ -540,7 +540,7 @@ function App() {
               {/* Class stats cards */}
               <div className="class-cards-grid">
                 {['A', 'B', 'C', 'D'].map(letter => {
-                  const clsName = activeResultTab[-1] + letter;
+                  const clsName = activeResultTab.slice(-1) + letter;
                   const stat = results[activeResultTab]?.[clsName] || { total: 0, female: 0, male: 0 };
                   return (
                     <div 
@@ -562,9 +562,9 @@ function App() {
               {/* Placed Students list */}
               <div className="placed-students-list">
                 <div className="list-header">
-                  <h3>{activeResultTab[-1] + selectedClass} 班 學生名冊</h3>
+                  <h3>{activeResultTab.slice(-1) + selectedClass} 班 學生名冊</h3>
                   <span className="total-badge">
-                    共 {results[activeResultTab]?.[activeResultTab[-1] + selectedClass]?.total || 0} 人
+                    共 {results[activeResultTab]?.[activeResultTab.slice(-1) + selectedClass]?.total || 0} 人
                   </span>
                 </div>
 
@@ -582,7 +582,7 @@ function App() {
                       </tr>
                     </thead>
                     <tbody>
-                      {(results[activeResultTab]?.[activeResultTab[-1] + selectedClass]?.students || []).map(s => (
+                      {(results[activeResultTab]?.[activeResultTab.slice(-1) + selectedClass]?.students || []).map(s => (
                         <tr key={s['學生註冊編號'] || s['中文姓名']}>
                           <td>{s['25-26 班號']}</td>
                           <td className="chinese-name">{s['中文姓名']}</td>
@@ -597,21 +597,21 @@ function App() {
                           <td>
                             <select 
                               className="dash-action-select"
-                              value={activeResultTab[-1] + selectedClass}
+                              value={activeResultTab.slice(-1) + selectedClass}
                               onChange={e => {
                                 handleManualPlacementChange(s['中文姓名'], e.target.value);
                                 showMsg(`已將 ${s['中文姓名']} 設定編入 ${e.target.value}，請重新執行編班以套用更動。`, 'info');
                               }}
                             >
-                              <option value={`${activeResultTab[-1]}A`}>{activeResultTab[-1]}A</option>
-                              <option value={`${activeResultTab[-1]}B`}>{activeResultTab[-1]}B</option>
-                              <option value={`${activeResultTab[-1]}C`}>{activeResultTab[-1]}C</option>
-                              <option value={`${activeResultTab[-1]}D`}>{activeResultTab[-1]}D</option>
+                              <option value={`${activeResultTab.slice(-1)}A`}>{activeResultTab.slice(-1)}A</option>
+                              <option value={`${activeResultTab.slice(-1)}B`}>{activeResultTab.slice(-1)}B</option>
+                              <option value={`${activeResultTab.slice(-1)}C`}>{activeResultTab.slice(-1)}C</option>
+                              <option value={`${activeResultTab.slice(-1)}D`}>{activeResultTab.slice(-1)}D</option>
                             </select>
                           </td>
                         </tr>
                       ))}
-                      {(results[activeResultTab]?.[activeResultTab[-1] + selectedClass]?.students || []).length === 0 && (
+                      {(results[activeResultTab]?.[activeResultTab.slice(-1) + selectedClass]?.students || []).length === 0 && (
                         <tr>
                           <td colSpan="7" className="no-data">此班級目前無學生。</td>
                         </tr>
