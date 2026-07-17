@@ -108,9 +108,11 @@ function App() {
       if (data.status === 'success') {
         setPaths({ source_dir: data.source_dir, output_path: data.output_path })
         checkFilesStatus()
+      } else if (data.status === 'cancelled') {
+        showMsg('已取消選擇目錄。', 'info')
       }
     } catch (e) {
-      showMsg('選擇目錄出錯', 'error')
+      showMsg('選擇目錄出錯，請確認後台伺服器 (server.py) 是否運行。', 'error')
     }
   }
 
@@ -120,9 +122,11 @@ function App() {
       const data = await res.json()
       if (data.status === 'success') {
         setPaths(prev => ({ ...prev, output_path: data.output_path }))
+      } else if (data.status === 'cancelled') {
+        showMsg('已取消選擇儲存路徑。', 'info')
       }
     } catch (e) {
-      showMsg('選擇儲存路徑出錯', 'error')
+      showMsg('選擇儲存路徑出錯，請確認後台伺服器 (server.py) 是否運行。', 'error')
     }
   }
 
