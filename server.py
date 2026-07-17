@@ -229,6 +229,7 @@ def process_data():
             info = {
                 '學生註冊編號': '',
                 '英文姓名': '', '性別': '', '社別': '', '學習支援': '', '備忘錄': '',
+                '選修1': '', '選修2': '', '選修3 / 應用學習': '',
                 'eClass imail:': '', 'G-Suite login:': '', 'O365 Login:': '', 'Teams搜索': '', '教城帳戶': ''
             }
             if df_old_list is not None:
@@ -721,21 +722,21 @@ def process_data():
             for idx, row in s4_promoted.iterrows():
                 name = row['Name_clean']
                 info = pull_student_info(name=name)
-                prev_class = str(row['班別']).strip()
-                target_class = '5' + prev_class[-1]
-                
+                prev_class = str(row.get('班別', '')).strip()
+                target_class = '5' + prev_class[-1] if prev_class else '5A'
+
                 if name in manual_placements:
                     target_class = manual_placements[name]
-                    
+
                 s5_students.append({
                     'Name': name, 'Reg_No': info['學生註冊編號'] or '', 'Class': target_class,
-                    'Avg': row['平均分'], 'Rank': row['級別名次'],
-                    'Chinese': row['中文'], 'English': row['英文'], 'Math': row['數學'], 'LS': '',
+                    'Avg': row.get('平均分', ''), 'Rank': row.get('級別名次', ''),
+                    'Chinese': row.get('中文', ''), 'English': row.get('英文', ''), 'Math': row.get('數學', ''), 'LS': '',
                     'EnglishName': info['英文姓名'], 'Gender': info['性別'], 'House': info['社別'],
                     'Support': info['學習支援'], 'Remark': info['備忘錄'], 'IsRepeater': False,
                     'X1': info['選修1'], 'X2': info['選修2'], 'X3': info['選修3 / 應用學習']
                 })
-                
+
             s5_repeaters = [r for r in promotion_repeaters if r['grade'] == 'S5']
             for rep in s5_repeaters:
                 name = rep['name']
@@ -769,16 +770,16 @@ def process_data():
             for idx, row in s5_promoted.iterrows():
                 name = row['Name_clean']
                 info = pull_student_info(name=name)
-                prev_class = str(row['班別']).strip()
-                target_class = '6' + prev_class[-1]
-                
+                prev_class = str(row.get('班別', '')).strip()
+                target_class = '6' + prev_class[-1] if prev_class else '6A'
+
                 if name in manual_placements:
                     target_class = manual_placements[name]
-                    
+
                 s6_students.append({
                     'Name': name, 'Reg_No': info['學生註冊編號'] or '', 'Class': target_class,
-                    'Avg': row['平均分'], 'Rank': row['級別名次'],
-                    'Chinese': row['中文'], 'English': row['英文'], 'Math': row['數學'], 'LS': '',
+                    'Avg': row.get('平均分', ''), 'Rank': row.get('級別名次', ''),
+                    'Chinese': row.get('中文', ''), 'English': row.get('英文', ''), 'Math': row.get('數學', ''), 'LS': '',
                     'EnglishName': info['英文姓名'], 'Gender': info['性別'], 'House': info['社別'],
                     'Support': info['學習支援'], 'Remark': info['備忘錄'], 'IsRepeater': False,
                     'X1': info['選修1'], 'X2': info['選修2'], 'X3': info['選修3 / 應用學習']
