@@ -227,6 +227,7 @@ def process_data():
         # Helper to pull old info
         def pull_student_info(reg_no=None, name=None):
             info = {
+                '學生註冊編號': '',
                 '英文姓名': '', '性別': '', '社別': '', '學習支援': '', '備忘錄': '',
                 'eClass imail:': '', 'G-Suite login:': '', 'O365 Login:': '', 'Teams搜索': '', '教城帳戶': ''
             }
